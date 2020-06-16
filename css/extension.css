@@ -1,0 +1,107 @@
+#main-menu #extension-seashell-menu-item {
+  background-image: url('../images/menu-icon.svg');
+}
+
+
+#extension-seashell-command{
+	width:80%;
+	min-width: 20rem;
+}
+
+
+#extension-seashell-view {
+  height: 100%; /*calc(100% - 7.6rem);*/
+  box-sizing: border-box;
+  /*overflow: auto;*/
+  position: relative;
+  top: 7.6rem;
+  /*left:0;*/
+}
+
+
+#extension-seashell-content {
+	display:flex;
+	flex-direction: column;
+  align-items: center;
+  justify-content: center;
+	flex-direction: column;
+	overflow: auto;
+  position: relative;
+  text-align: left;
+  font-size: 1.6rem;
+  color: #fff;
+  margin: 0 auto;
+	height:100vh; 
+}
+
+#extension-seashell-content-container{
+	height:100%;
+	max-height: 100%;
+}
+
+
+#extension-seashell-content label{
+	min-width: 100px;
+	display: inline-block;
+}
+
+#extension-seashell-content input:invalid{
+	/*border:2px solid red;*/
+}
+
+@media screen and (min-width: 1024px) {
+	#extension-seashell-view{
+		left:6rem;
+		top: 0;
+		height:100vh; 
+		position:absolute;
+	}
+	
+	#extension-seashell-content{
+		
+	}
+	
+	#extension-seashell-content-container{
+		height:auto;
+		width:80%;
+		max-width:60rem;
+	}
+}
+
+
+#extension-seashell-run,
+#extension-seashell-restart{
+  font-size: 1.6rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+#extension-seashell-run:hover,
+#extension-seashell-restart:hover{
+	background-color: LightGreen;
+}
+
+
+.extension-seashell-checkbox-container{
+	text-align:left;
+	width:100px;
+	display: inline-block;
+	margin-top:1rem;
+}
+
+#extension-seashell-content .control-label{
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+	margin-top:1rem;
+}
+
+
+#extension-seashell-content .field-description{
+	margin-top: .5rem;
+	font-size: 1.5rem;
+	margin-bottom: 0.5rem;
+	padding-left: 100px;
+}
