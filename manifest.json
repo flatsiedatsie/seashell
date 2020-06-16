@@ -20,10 +20,10 @@
     }
   },
   "homepage_url": "https://github.com/flatsiedatsie/seashell",
-  "id": "seahell",
+  "id": "seashell",
   "license": "MPL-2.0",
   "manifest_version": 1,
-  "name": "seashell",
+  "name": "Seashell",
   "short_name": "Seashell",
   "version": "0.0.1",
   "web_accessible_resources": [
