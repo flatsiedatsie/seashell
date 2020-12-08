@@ -1,13 +1,13 @@
-"""Shelkly API handler."""
+"""Seashell API handler."""
 
 
-import functools
-import json
 import os
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lib'))
+import json
 from time import sleep
+import functools
 import datetime
 import subprocess
-
 
 try:
     from gateway_addon import APIHandler, APIResponse
@@ -16,6 +16,18 @@ except:
     print("Import APIHandler and APIResponse from gateway_addon failed. Use at least WebThings Gateway version 0.10")
 
 print = functools.partial(print, flush=True)
+
+
+
+_TIMEOUT = 3
+
+_CONFIG_PATHS = [
+    os.path.join(os.path.expanduser('~'), '.webthings', 'config'),
+]
+
+if 'WEBTHINGS_HOME' in os.environ:
+    _CONFIG_PATHS.insert(0, os.path.join(os.environ['WEBTHINGS_HOME'], 'config'))
+
 
 
 class SeashellAPIHandler(APIHandler):
