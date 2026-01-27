@@ -1,27 +1,40 @@
 <div id="extension-seashell-content">
   
-    <div id="extension-seashell-content-container">
+	<div id="extension-seashell-content-container">
 
-          <h2>Execute a shell command</h2>
-          <div id="extension-seashell-request">
-                <div id="extension-seashell-form-content">
-                      <label for="command">Command: </label><input type="text" name="command" id="extension-seashell-command" required>
-                      <br/>
-                      
-                      <br/>
-                      
-                      <button type="button" id="extension-seashell-run">Run</button> <button type="button" id="extension-seashell-restart">Restart Gateway</button>
-                </div>
-          </div>
+		<div id="extension-seashell-content-header">
+			<h2>Execute a shell command</h2>
+		  
+			
+		  
+			<div id="extension-seashell-request">
+				<div id="extension-seashell-form-content">
+					<!--<label for="command">Command: </label>-->
+					
+					<div class="extension-seashell-flex">
+						<button type="button" id="extension-seashell-history-button" class="extension-seashell-big-button">☰</button><input type="text" name="command" id="extension-seashell-command" required><button type="button" id="extension-seashell-pipe-buton" class="extension-seashell-show-if-kiosk extension-seashell-big-button"> | </button><button type="button" id="extension-seashell-run-button" class="extension-seashell-big-button">Run</button> 
+					</div>
+					<div id="extension-seashell-recent-commands" class="extension-seashell-hidden"></div>
+					<!--
+					<div class="extension-seashell-flex-between">
+						<button type="button" id="extension-seashell-run">Run</button> 
+						<button type="button" id="extension-seashell-restart">Restart Controller</button>
+					</div>
+					-->
+	  					  
+				</div>
+			</div>
+			<div id="extension-seashell-response">
+				<pre id="extension-seashell-response-data"></pre>
+			</div>
+		</div>
+		  
+		  
+		<div id="extension-seashell-messages-container"></div>
 
-          <br>
-          <br>
+          
 
-          <div id="extension-seashell-response">
-                <pre id="extension-seashell-response-data"></pre>
-          </div>
-
-    </div>
+	</div>
 </div>
 
 
