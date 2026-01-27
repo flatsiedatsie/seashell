@@ -1,5 +1,5 @@
 {
-  "author": "Flatsiedatsie",
+  "author": "CandleSmartHome.com",
   "content_scripts": [
     {
       "css": [
@@ -10,7 +10,7 @@
       ]
     }
   ],
-  "description": "a quick way to run test commands during development",
+  "description": "a quick way to run commands, for advanced users",
   "gateway_specific_settings": {
     "webthings": {
       "exec": "python3 {path}/main.py",
@@ -25,7 +25,7 @@
   "manifest_version": 1,
   "name": "Seashell",
   "short_name": "Seashell",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "web_accessible_resources": [
     "css/*.css",
     "images/*.svg",
