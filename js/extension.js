@@ -196,8 +196,8 @@
 		    )
 			.then((body) => {
 				pre.innerHTML = body; //JSON.stringify(body, null, 2);
-		    }).catch((e) => {
-				pre.textContent = e.toString();
+		    }).catch((err) => {
+				pre.textContent = err.toString();
 		    });
 		}
 		else{
@@ -245,7 +245,7 @@
 			}
 			const pre = this.view.querySelector('#extension-seashell-response-data');
 			if(pre){
-				pre.textContent = e.toString();
+				pre.textContent = err.toString();
 			}
 		});
 
