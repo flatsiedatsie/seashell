@@ -41,6 +41,7 @@
 
 		const history_button_el = this.view.querySelector('#extension-seashell-history-button');
         const command_el = this.view.querySelector('#extension-seashell-command');
+		const pipe_button_el = this.view.querySelector('#extension-seashell-pipe-buton');
         const run_button_el = this.view.querySelector('#extension-seashell-run-button');
         const pre = this.view.querySelector('#extension-seashell-response-data');
 		const content = this.view.querySelector('#extension-seashell-content');
@@ -61,6 +62,10 @@
 			else{
 				recent_commands_el.classList.add('extension-seashell-hidden');
 			}
+        });
+	  
+	  	pipe_button_el.addEventListener('click', () => {
+			command_el.value = command_el.value + ' | ';
         });
 	  
         run_button_el.addEventListener('click', () => {
