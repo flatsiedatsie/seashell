@@ -77,9 +77,11 @@
 	padding:2rem 2rem 0 2rem;
 }
 
+
 #extension-seashell-view h2{
 	margin-left:10rem;
 }
+
 
 
 @media screen and (min-width: 1024px) {
@@ -94,6 +96,10 @@
 		height:auto;
 		width:80%;
 		max-width:100rem;
+	}
+
+	#extension-seashell-view h2{
+		margin-left:0;
 	}
 }
 
