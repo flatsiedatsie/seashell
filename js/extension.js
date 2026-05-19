@@ -259,6 +259,17 @@
 				console.log("in run_command.  command: ", command);
 			}
 			
+			const message_container_el = this.view.querySelector('#extension-seashell-messages-container');
+			if(!message_container_el){
+				console.error("seashell: message container element is missing");
+				return
+			}
+
+			if(command == 'clear' || command == 'reset'){
+				message_container_el.innerHTML = '';
+				return
+			}
+
 			if(this.recent_commands.indexOf(command) == -1){
 				this.recent_commands.push(command);
 				this.generate_recent_commands_list(); // also limits the length to 10 commands
@@ -275,9 +286,8 @@
 				if(this.debug){
 					console.log("seashell debug: run command response body: ", body);
 				}
-				//pre.innerHTML = body; //JSON.stringify(body, null, 2);
 		    }).catch((err) => {
-				console.error("seashell: caught error calling run_command: ", err);
+				console.error("seashell: caught error calling run_command.  command,err: ",command, err);
 		    });
 		}
 		else{
@@ -287,7 +297,7 @@
 		}
 		
 		this.recent_commands_index = 0;
-		const message_container_el = this.view.querySelector('#extension-seashell-messages-container');
+		
 		if(message_container_el){
 			message_container_el.scrollTop = message_container_el.scrollHeight;
 		}
