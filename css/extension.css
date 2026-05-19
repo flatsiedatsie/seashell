@@ -3,6 +3,24 @@
 }
 
 
+#extension-seashell-title{
+	text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: normal;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    display: block;
+    padding: .5rem;
+    padding-left: 4.5rem;
+    font-size: 1.8rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 0rem;
+    background-image: url(../images/menu-icon.svg);
+    width: 13rem;
+    margin: 1rem auto 4rem auto;
+}
+
 .extension-seashell-flex-between{
 	display:flex;
 	justify-content:space-between;
@@ -175,6 +193,9 @@ body:not(.kiosk) .extension-seashell-show-if-kiosk{
 	border-radius:1rem;
 	max-width:80%;
 }
+#extension-seashell-recent-commands:empty{
+	display:none;
+}
 
 #extension-seashell-recent-commands:not(:empty){
 	margin-bottom:2rem;
@@ -246,6 +267,7 @@ body:not(.developer) #extension-seashell-response{
 	flex-grow:1;
 	width: calc(100% - 4rem);
 	font-family: monospace, monospace;
+	white-space: pre-wrap;
 }
 
 .extension-seashell-message{

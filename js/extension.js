@@ -9,6 +9,32 @@
 	  
 	  this.debug = true;
 	  
+	  this.candle_ascii = `
+
+
+             .
+           .....
+       ..:::::::::.. 
+    ..:::::: # ::::::..
+  ..:::::: ====== :::::..
+ ..::::: ========== ::::..
+..::::: ==== |\ ==== ::::..
+.::::: ==== /%#| ==== :::..
+.::::: === |&@/ ==== :::::.
+..::::: ===_\|_==== :::::..
+ ..::::: /| .:. | :::::...
+  ..:::: || .:. | ::::...
+   ...:: (| .:. | ::....
+     .... | .:. | ....
+	 
+
+
+	  `
+
+
+
+
+
 	  this.waiting_for_poll_response = 0;
 	  
 	  this.recent_commands_index = 0;
@@ -43,17 +69,35 @@
         const command_el = this.view.querySelector('#extension-seashell-command');
 		const pipe_button_el = this.view.querySelector('#extension-seashell-pipe-buton');
         const run_button_el = this.view.querySelector('#extension-seashell-run-button');
-        const pre = this.view.querySelector('#extension-seashell-response-data');
+        //const pre = this.view.querySelector('#extension-seashell-response-data');
 		const content = this.view.querySelector('#extension-seashell-content');
+		const title_el = this.view.querySelector('#extension-seashell-title');
         //const restart_button_el = this.view.querySelector('#extension-seashell-restart-button');
 		
 		const recent_commands_el = this.view.querySelector('#extension-seashell-recent-commands');
 		
-		if(pre == null){
+		if(!content){
     		console.error("seashell show: missing HTML elements? aborting");
     		return
 		}
+		
+		if(title_el){
+			title_el.addEventListener('click', () => {
+				this.view.querySelector('#extension-seashell-messages-container').innerHTML = this.candle_ascii;
+        	});
+		}
+		
 	  
+		history_button_el.addEventListener('click', () => {
+			console.log("seashell: clicked on history button");
+			if(recent_commands_el.classList.contains('extension-seashell-hidden')){
+				recent_commands_el.classList.remove('extension-seashell-hidden');
+			}
+			else{
+				recent_commands_el.classList.add('extension-seashell-hidden');
+			}
+        });
+
 	  	history_button_el.addEventListener('click', () => {
 			console.log("seashell: clicked on history button");
 			if(recent_commands_el.classList.contains('extension-seashell-hidden')){
@@ -73,14 +117,14 @@
 			command_el.value = '';
         });
 		
-		command_el.addEventListener('keypress', function (e) {
+		command_el.addEventListener('keypress', (e) => {
 			if (e.key === 'Enter') {
 				this.run_command(command_el.value);
 				command_el.value = '';
 			}
 		});
 		
-		command_el.addEventListener('keypress', function (e) {
+		command_el.addEventListener('keypress', (e) => {
 			if (e.key === 'ArrowUp') {
 				
 				if(this.recent_commands.length){
@@ -137,32 +181,39 @@
 			let timers_counter = 0;
 			content_el.poll_interval = setInterval(() => {
 			
-				if( !document.location.href.endsWith("extensions/seashell") ){
+				if(location.pathname == "/extensions/seashell"){
+					timers_counter++;
+					if(timers_counter > 60){
+						timers_counter = 0;
+						if(this.waiting_for_poll_response){
+							//this.waiting_for_poll_response = false;
+						}
+					}
+					if(this.waiting_for_poll_response == 0){
+						this.do_poll();
+					}
+					else{
+						this.waiting_for_poll_response++;
+						if(this.debug){
+							console.log("seashell debug: waiting_for_poll_response: ", this.waiting_for_poll_response);
+						}
+					}
+					
+				}
+				else{
+					
 					if(this.debug){
 						console.log("seashell debug: user navigated away from Seashell addon. Stopping Seashell interval");
 					}
-					clearInterval(content_el.poll_interval);
-					this.view.innerHTML = '';
-					return
+					if(content_el.poll_interval){
+						clearInterval(content_el.poll_interval);
+						this.view.innerHTML = '';
+						return
+					}
 				}
 				
 				
-				timers_counter++;
-				if(timers_counter > 30){
-					timers_counter = 0;
-					if(this.waiting_for_poll_response){
-						//this.waiting_for_poll_response = false;
-					}
-				}
-				if(this.waiting_for_poll_response == 0){
-					this.do_poll();
-				}
-				else{
-					this.waiting_for_poll_response++;
-					if(this.debug){
-						console.log("seashell debug: waiting_for_poll_response: ", this.waiting_for_poll_response);
-					}
-				}
+				
 			
 			},1000);
 		}
@@ -170,6 +221,35 @@
 	  	this.generate_recent_commands_list();
 
     }
+	
+	
+	hide(){
+		try{
+			setTimeout(() => {
+				if(document.getElementById('extension-seashell-menu-item').classList.contains('selected') == false){
+
+					let content_el = this.view.querySelector('#extension-seashell-content-container');
+					if(content_el && content_el.poll_interval){
+						clearInterval(content_el.poll_interval);
+					}
+			
+					if( !location.pathname == "/extensions/seashell" ){
+						if(this.debug){
+							console.log("seashell debug: user navigated away from Seashell addon. Stopping Seashell interval");
+						}
+						if(content_el.poll_interval){
+							clearInterval(content_el.poll_interval);
+						}
+
+						this.view.innerHTML = "";
+					}
+				}
+			},5000);
+		}
+        catch(err){
+            console.error("seashell addon: caught error in hide: ", err);
+        }
+	}
 	
 	
 	run_command(command){
@@ -185,9 +265,6 @@
 				localStorage.setItem("extension_seashell_recent_commands", JSON.stringify(this.recent_commands));
 			}
 			
-			const pre = this.view.querySelector('#extension-seashell-response-data');
-			pre.innerHTML = "Running command...";
-			
 			this.generate_messages([{'timestamp':Date.now()/1000,'type':'stdin','content':command}]);
 			
 			window.API.postJson(
@@ -195,9 +272,12 @@
 		          {'command': command}
 		    )
 			.then((body) => {
-				pre.innerHTML = body; //JSON.stringify(body, null, 2);
+				if(this.debug){
+					console.log("seashell debug: run command response body: ", body);
+				}
+				//pre.innerHTML = body; //JSON.stringify(body, null, 2);
 		    }).catch((err) => {
-				pre.textContent = err.toString();
+				console.error("seashell: caught error calling run_command: ", err);
 		    });
 		}
 		else{
@@ -242,10 +322,6 @@
 			this.waiting_for_poll_response = 0;
 			if(this.debug){
 				console.error("seashell debug: caught error calling polling api ", err);
-			}
-			const pre = this.view.querySelector('#extension-seashell-response-data');
-			if(pre){
-				pre.textContent = err.toString();
 			}
 		});
 
