@@ -87,9 +87,6 @@
 	display: inline-block;
 }
 
-#extension-seashell-content input:invalid{
-	/*border:2px solid red;*/
-}
 
 #extension-seashell-content-header{
 	padding:2rem 2rem 0 2rem;
@@ -263,7 +260,7 @@ body:not(.developer) #extension-seashell-response{
 	overflow: auto;
 	gap: .5rem;
 	height:30%;
-	min-height:30%;
+	min-height:50vh;
 	flex-grow:1;
 	width: calc(100% - 4rem);
 	font-family: monospace, monospace;
