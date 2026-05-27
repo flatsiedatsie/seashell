@@ -10,7 +10,7 @@
       ]
     }
   ],
-  "description": "a quick way to run commands, for advanced users",
+  "description": "A terminal to run shell commands, for advanced users",
   "gateway_specific_settings": {
     "webthings": {
       "exec": "python3 {path}/main.py",
